@@ -1,0 +1,36 @@
+.header {
+  text-align: center;
+  font-weight: 900;
+}
+
+.btn {
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #e74c3c;
+  border-radius: 0.6em;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'M PLUS 1p', sans-serif;
+  font-weight: 700;
+}
+
+.btn:hover, .btn:focus {
+  color: #fff;
+  outline: 0;
+}
+
+.third {
+  border-color: #3498DB;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #3498DB inset, 0 0 0 0 #3498DB;
+  transition: all 150ms ease-in-out;
+}
+
+.third:hover {
+  box-shadow: 0 0 10px 0 #3498DB inset, 0 0 10px 4px #3498DB;
+}

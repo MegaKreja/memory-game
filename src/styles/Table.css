@@ -1,0 +1,33 @@
+.grid {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.card {
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  display: inline-block;
+  /*margin: 0 auto;*/
+  margin: 2%;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transition: 0.6s;
+  -moz-transform-style: preserve-3d;
+  -o-transition: 0.6s;
+  -o-transform-style: preserve-3d;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/*.card:active {
+  -webkit-transform: rotateX(180deg);
+  -moz-transform: rotateX(180deg);
+  -o-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+}*/
+
+.card img {
+  width: 90px;
+}
