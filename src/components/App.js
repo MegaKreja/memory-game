@@ -26,51 +26,63 @@ class App extends Component {
     const arr = [
       {
         img: walter,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: skyler,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: jesse,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: hank,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: marie,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: mike,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: saul,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: huell,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: skinnyPete,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: badger,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: gustavo,
-        flipped: false
+        flipped: false,
+        correct: false
       },
       {
         img: walterjr,
-        flipped: false
+        flipped: false,
+        correct: false
       },
     ];
     const grid = arr.concat(arr);
@@ -86,19 +98,24 @@ class App extends Component {
     let flippedCards = this.state.flippedCards.slice();
     console.log(flippedCards); 
     if(flippedCards.length < 2) {
-      grid[index] = {img: grid[index].img, flipped: true};
+      grid[index] = {img: grid[index].img, flipped: true, correct: false};
       this.setState({grid: grid});
       let flipCard = {img: grid[index].img, index: index};
       flippedCards.push(flipCard);
       this.setState({flippedCards: flippedCards});
       if(flippedCards.length === 2) {
-        if(flippedCards[0] !== flippedCards[1]) {
+        if(flippedCards[0].img !== flippedCards[1].img) {
           setTimeout(() => {
-          grid[flippedCards[0].index] = {img: flippedCards[0].img, flipped: false};
-          grid[flippedCards[1].index] = {img: flippedCards[1].img, flipped: false};
+          grid[flippedCards[0].index] = {img: flippedCards[0].img, flipped: false, correct: false};
+          grid[flippedCards[1].index] = {img: flippedCards[1].img, flipped: false, correct: false};
           this.setState({grid: grid});
           this.setState({flippedCards: []});
-          },1500)
+          },1200)
+        } else {
+          grid[flippedCards[0].index] = {img: flippedCards[0].img, flipped: true, correct: true};
+          grid[flippedCards[1].index] = {img: flippedCards[1].img, flipped: true, correct: true};
+          this.setState({grid: grid});
+          this.setState({flippedCards: []});
         }
       }
     } 
