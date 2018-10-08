@@ -1,54 +1,61 @@
+import { fromJS } from 'immutable';
 import { FLIP_CARD, RESTART_GAME, MATCH_CARDS } from '../constants/actionTypes';
 import generateGrid from '../data/generateGrid';
 
-const initialState = {
+const initialState = fromJS({
 	grid: generateGrid(),
 	flippedCards: [],
-};
+});
+
+// console.log(initialState.get('flippedCards'));
+// let flipCard = { img: initialState.get('grid').get(0).get('img'), index: 1 };
+// // initialState = initialState.setIn(['grid', 0, 'flipped'], true).setIn(['grid', 0, 'correct'], true);
+// // initialState = initialState.set('flippedCards', initialState.get('flippedCards').push('gringo'));
+// // initialState = initialState.set('flippedCards', initialState.get('flippedCards').push('gringo'));
+// initialState = initialState.set('flippedCards', initialState.get('flippedCards').push(flipCard));
+// flipCard = { img: initialState.get('grid').get(1).get('img'), index: 2 };
+// initialState = initialState.set('flippedCards', initialState.get('flippedCards').push(flipCard));
+// console.log(initialState.get('flippedCards').get(0).img.toString() !== initialState.get('flippedCards').get(1).img.toString());
+// console.log(initialState.get('flippedCards').get(0).img, initialState.get('flippedCards').get(1).img);
+// // console.log(initialState.get('flippedCards').get(0).index);
+// // console.log(initialState.get('flippedCards').size);
+// // console.log(initialState);
 
 const rootReducer = (state = initialState, action) => {
 	switch (action.type) {
 	case FLIP_CARD: {
-		const newState = Object.assign({}, state);
-		const { grid } = newState;
-		const { flippedCards } = newState;
+		let newState = state;
+		const img = newState.get('grid').get(0).get('img');
+		// const flippedCards = newState.get('flippedCards');
 		const { index } = action;
-		const flipCard = { img: grid[index].img, index };
-		if (flippedCards.length < 2) {
-			Object.assign(newState, {
-				...newState,
-				grid: grid.map((card, i) => (i === index ? { ...card, flipped: true } : card)),
-				flippedCards: flippedCards.concat(...state, flipCard),
-			});
+		const flipCard = { img, index };
+		if (newState.get('flippedCards').size < 2) {
+			newState = newState.setIn(['grid', index, 'flipped'], true);
+			newState = newState.set('flippedCards', newState.get('flippedCards').push(flipCard));
 		}
-		return { ...newState };
+		return newState;
 	}
 	case MATCH_CARDS: {
-		const newState = Object.assign({}, state);
-		const { grid } = newState;
-		const flippedArr = newState.flippedCards;
-		if (flippedArr.length === 2) {
-			if (flippedArr[0].img !== flippedArr[1].img) {
-				Object.assign(newState, {
-					...newState,
-					grid: grid.map((card, i) => ((i === flippedArr[0].index) || (i === flippedArr[1].index) ? { ...card, flipped: false } : card)),
-					flippedCards: [],
-				});
+		let newState = state;
+		// const flippedCards = newState.get('flippedCards');
+		if (newState.get('flippedCards').size === 2) {
+			if (newState.get('flippedCards').get(0) !== newState.get('flippedCards').get(1)) {
+				newState = newState.setIn(['grid', newState.get('flippedCards').get(0).index, 'flipped'], false);
+				newState = newState.setIn(['grid', newState.get('flippedCards').get(1).index, 'flipped'], false);
+				newState = newState.set('flippedCards', fromJS([]));
 			} else {
-				Object.assign(newState, {
-					...newState,
-					grid: grid.map((card, i) => ((i === flippedArr[0].index) || (i === flippedArr[1].index) ? { ...card, flipped: true, correct: true } : card)),
-					flippedCards: [],
-				});
+				newState = newState.setIn(['grid', newState.get('flippedCards').get(0).index, 'flipped'], true).setIn(['grid', newState.get('flippedCards').get(0).index, 'correct'], true);
+				newState = newState.setIn(['grid', newState.get('flippedCards').get(1).index, 'flipped'], true).setIn(['grid', newState.get('flippedCards').get(1).index, 'correct'], true);
+				newState = newState.set('flippedCards', fromJS([]));
 			}
 		}
-		return { ...newState };
+		return newState;
 	}
 	case RESTART_GAME:
-		return {
+		return fromJS({
 			grid: generateGrid(),
 			flippedCards: [],
-		};
+		});
 	default:
 		return state;
 	}

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { flipCard, matchCards } from '../actions/actions';
 import cardBack from '../styles/images/card-back.jpg';
 
-const mapStateToProps = state => ({ grid: state.grid, flippedCards: state.flippedCards });
+const mapStateToProps = state => ({ grid: state.get('grid'), flippedCards: state.get('flippedCards') });
 
 const mapDispatchToProps = dispatch => ({
 	flipCard: (index) => {
@@ -20,16 +20,29 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ConnectedTable = (props) => {
+	// console.log(props);
 	const { grid } = props;
 	const { flippedCards } = props;
-	if (flippedCards.length === 2) {
+	if (flippedCards.size === 2) {
 		props.matchCards();
 	}
+
 	const table = grid.map((card, i) => (
-		<div role="presentation" onClick={(!card.correct) && (!card.flipped) ? () => props.flipCard(i) : null} key={uuidv4()} className={`card ${card.correct && 'hidden'}`}>
-			{!card.flipped ? <img src={cardBack} alt="back" /> : <img src={card.img} alt="" />}
+		<div
+			role="presentation"
+			onClick={(!card.get('correct')) && (!card.get('flipped')) ? () => props.flipCard(i) : null}
+			key={uuidv4()}
+			className={`card ${card.get('correct') && 'hidden'}`}
+		>
+			{!card.get('flipped') ? <img src={cardBack} alt="back" /> : <img src={card.get('img')} alt="" />}
 		</div>
 	));
+
+	// const table = grid.map((card, i) => (
+	// 	<div role="presentation" onClick={(!card.correct) && (!card.flipped) ? () => props.flipCard(i) : null} key={uuidv4()} className={`card ${card.correct && 'hidden'}`}>
+	// 		{!card.flipped ? <img src={cardBack} alt="back" /> : <img src={card.img} alt="" />}
+	// 	</div>
+	// ));
 
 	return (
 		<div className="table">
