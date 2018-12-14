@@ -41,7 +41,7 @@ const ConnectedTable = (props) => {
 
 	return (
 		<div className="table">
-			{counter === 1 ? table : <img src={iWon} alt="I won gif" />}
+			{counter < 8 ? table : <img src={iWon} alt="I won gif" />}
 		</div>
 	);
 };
