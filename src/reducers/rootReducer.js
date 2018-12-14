@@ -5,6 +5,7 @@ import generateGrid from '../data/generateGrid';
 const initialState = fromJS({
 	grid: generateGrid(),
 	flippedCards: [],
+	counter: 0,
 });
 
 const rootReducer = (state = initialState, action) => {
@@ -32,6 +33,7 @@ const rootReducer = (state = initialState, action) => {
 			} else {
 				newState = newState.setIn(['grid', newState.get('flippedCards').get(0).index, 'flipped'], true).setIn(['grid', newState.get('flippedCards').get(0).index, 'correct'], true);
 				newState = newState.setIn(['grid', newState.get('flippedCards').get(1).index, 'flipped'], true).setIn(['grid', newState.get('flippedCards').get(1).index, 'correct'], true);
+				newState = newState.update('counter', counter => counter + 1);
 				newState = newState.set('flippedCards', fromJS([]));
 			}
 		}
@@ -41,6 +43,7 @@ const rootReducer = (state = initialState, action) => {
 		return fromJS({
 			grid: generateGrid(),
 			flippedCards: [],
+			counter: 0,
 		});
 	default:
 		return state;

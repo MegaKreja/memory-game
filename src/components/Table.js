@@ -5,8 +5,9 @@ import '../styles/Table.css';
 import { connect } from 'react-redux';
 import { flipCard, matchCards } from '../actions/actions';
 import cardBack from '../styles/images/card-back.jpg';
+import iWon from '../styles/images/iWonGif.gif';
 
-const mapStateToProps = state => ({ grid: state.get('grid'), flippedCards: state.get('flippedCards') });
+const mapStateToProps = state => ({ grid: state.get('grid'), flippedCards: state.get('flippedCards'), counter: state.get('counter') });
 
 const mapDispatchToProps = dispatch => ({
 	flipCard: (index) => {
@@ -22,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
 const ConnectedTable = (props) => {
 	const { grid } = props;
 	const { flippedCards } = props;
+	const { counter } = props;
 	if (flippedCards.size === 2) {
 		props.matchCards();
 	}
@@ -39,7 +41,7 @@ const ConnectedTable = (props) => {
 
 	return (
 		<div className="table">
-			{table}
+			{counter === 1 ? table : <img src={iWon} alt="I won gif" />}
 		</div>
 	);
 };
@@ -60,6 +62,7 @@ ConnectedTable.propTypes = {
 			index: PropTypes.number.isRequired,
 		}).isRequired
 	).isRequired,
+	counter: PropTypes.number.isRequired,
 };
 
 const Table = connect(mapStateToProps, mapDispatchToProps)(ConnectedTable);

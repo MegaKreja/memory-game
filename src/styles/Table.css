@@ -4,6 +4,11 @@
   padding-top: 3%;
 }
 
+.table img {
+  display:block;
+  margin:auto;
+}
+
 .card {
   width: 25%;
   height: 25%;
@@ -30,6 +35,12 @@
   .table {
     width: 300px;
     margin: 0 auto;
+  }
+
+  .table img {
+    display:block;
+    margin:auto;
+    width: 300px;
   }
 
   .card {
